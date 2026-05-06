@@ -1,105 +1,108 @@
-# INFO602 Final Project – SparkODAnalysis
+# INFO 602 Final Project — Drug Overdose & Crash Analysis in Virginia
 
-## 📌 Project Overview
-
-This project is a Scala + Apache Spark application developed for the INFO602 final submission. It performs data analysis on:
-
-* 🚗 Virginia crash data
-* 🚑 Overdose (OD) incident data
-
-The goal is to identify patterns, trends, and insights from both datasets using Spark DataFrame operations.
+**Maria Shine Joseph**
 
 ---
 
-## 📂 Project Structure
+## Proposition
 
-```
-sparksqlapi_example/
-│
-├── data/
-│   └── vdh_od.csv                # Overdose dataset (Virginia Department of Health)
-│
-├── src/main/scala/edu/vcu/sparksqlapi_example/
-│   ├── SparkODAnalysis.scala     # Main Spark analysis logic
-│   ├── GeoClean.scala            # Data cleaning utilities
-│   ├── MergeCrashData.scala      # Crash dataset processing
-│   └── odschema.scala            # Schema definitions
-│
-└── project/                      # Build configurations
-```
+Virginia localities with higher motor vehicle crash counts also exhibit higher
+drug overdose ED visit rates — suggesting that substance use is a shared
+behavioral driver of both outcomes across the same geographic corridors.
 
 ---
 
-## ⚙️ Technologies Used
+## Datasets
 
-* Apache Spark (DataFrame API)
-* Scala
-* SBT (Scala Build Tool)
-* CSV data processing
+| Dataset | Source | Size |
+|---------|--------|------|
+| VDH PUD Overdose ED Visits by Year and Geography | Virginia Open Data Portal | ~287 KB |
+| CrashData Basic | Virginia DMV / VDOT via Virginia Roads | ~761 MB |
 
----
-
-## 📊 Key Functionalities
-
-### 1. Overdose Data Analysis (OD)
-
-* Reads Virginia OD dataset
-* Cleans missing/null values
-* Aggregates overdose trends by region/date
-
-### 2. Crash Data Processing
-
-* Loads crash-related dataset
-* Standardizes fields
-* Performs grouping and aggregation for insights
-
-### 3. Geo Data Cleaning
-
-* Cleans location-based fields
-* Prepares structured data for analysis
+> Large files are excluded from this repo per GitHub's size limits.
+> Place both CSVs in a `data/` folder before running.
 
 ---
 
-## 🚀 How to Run the Project
+## Key Results (Real Spark Output)
 
-### Step 1: Open terminal in project folder
+**Analysis A — OD Rate Trend by Year**
 
-```
-cd sparksqlapi_example
-```
+| Year | Avg OD Rate (per 10k visits) |
+|------|------------------------------|
+| 2021 | 61.00 |
+| 2022 | 59.78 |
+| 2023 | 54.26 |
+| 2024 | 43.59 |
+| 2025 | 39.88 |
+| 2026* | 39.04 |
 
-### Step 2: Build project
+*Partial year data
 
-```
-sbt clean compile
-```
+**Analysis B — OD Rate by Crash Volume Bucket**
 
-### Step 3: Run Spark job
+| Crash Bucket | Avg OD Rate | N (county-year pairs) |
+|--------------|-------------|----------------------|
+| Medium (100–499 crashes/yr) | 50.96 | 232 |
+| High (500+ crashes/yr) | 49.30 | 95 |
+| Low (< 100 crashes/yr) | 41.79 | 53 |
 
-```
+**Analysis C — Top 10 Highest-OD Localities**
+
+| Rank | Locality | Avg OD Rate |
+|------|----------|-------------|
+| 1 | Amherst | 96.9 |
+| 2 | Lynchburg | 96.7 |
+| 3 | Portsmouth | 90.57 |
+| 4 | Roanoke County, Roanoke City & Salem | 81.35 |
+| 5 | Patrick | 78.72 |
+| 6 | Buchanan | 76.62 |
+| 7 | Grayson County & Galax | 76.43 |
+| 8 | Appomattox | 76.17 |
+| 9 | Bland | 70.52 |
+| 10 | Henry County & Martinsville | 67.60 |
+
+---
+
+## How to Run
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/[your-username]/info602-od-analysis.git
+cd info602-od-analysis
+
+# 2. Add your data files
+mkdir data
+# Copy vdh_od.csv and crash_data.csv into data/
+
+# 3. Fix Windows Hadoop path (Windows only)
+set HADOOP_HOME=C:\hadoop
+set hadoop.home.dir=C:\hadoop
+
+# 4. Run
 sbt run
+# Select SparkODAnalysis when prompted
 ```
 
 ---
 
-## 📌 Expected Output
-
-The program outputs:
-
-* Aggregated OD trends
-* Crash statistics summaries
-* Cleaned and structured datasets
-
----
-
-## ⚠️ Notes
-
-* Large dataset files (e.g., crash dataset >100MB) were removed due to GitHub limits.
-* Only sample/processed datasets are included in the repository.
+## Project Structure
+sparksqlapi_example/
+├── data/                          ← place CSVs here (not tracked by git)
+│   ├── vdh_od.csv
+│   └── crash_data.csv
+├── src/main/scala/edu/vcu/sparksqlapi_example/
+│   ├── SparkODAnalysis.scala      ← main analysis (this project)
+│   ├── MergeCrashData.scala       ← professor's example
+│   ├── GeoClean.scala             ← professor's example
+│   └── odschema.scala             ← professor's example
+└── build.sbt
 
 ---
 
-## 👨‍💻 Author
+## Tech Stack
 
-Maria Shine Joseph
-V01150456
+- Apache Spark 3.1.1
+- Scala 2.12.13
+- sbt 1.8.2
+- Spark SQL (model-free analysis — no regression models)
