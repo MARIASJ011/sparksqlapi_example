@@ -6,7 +6,7 @@
 
 ## Overview
 
-This project investigates whether Virginia localities with higher motor vehicle crash counts also exhibit higher drug overdose emergency department (ED) visit rates. Using Apache Spark 3.1.1 and Spark SQL, two large real-world Virginia datasets were cleaned, joined, and analyzed using a fully model-free approach — no regression models, only cross-tabulations, grouped aggregations, and bucketing.
+This project investigates whether Virginia localities with higher motor vehicle crash counts also exhibit higher drug overdose emergency department (ED) visit rates. Using Apache Spark 3.1.1 and Spark SQL, two large real-world Virginia datasets were cleaned, joined, and analyzed using a fully model-free approach no regression models, only cross-tabulations, grouped aggregations, and bucketing.
 
 The analysis processed a 761 MB crash file with hundreds of thousands of rows alongside Virginia Department of Health overdose ED visit data covering 2021–2026. All analysis was performed programmatically in Scala using the Spark SQL API.
 
@@ -14,7 +14,7 @@ The analysis processed a 761 MB crash file with hundreds of thousands of rows al
 
 ## Proposition
 
-> **Virginia localities with higher motor vehicle crash counts also exhibit higher drug overdose ED visit rates — suggesting that substance use is a shared behavioral driver of both outcomes across the same geographic corridors.**
+> **Virginia localities with higher motor vehicle crash counts also exhibit higher drug overdose ED visit rates suggesting that substance use is a shared behavioral driver of both outcomes across the same geographic corridors.**
 
 This proposition is grounded in public health research linking opioid and stimulant impairment to unsafe driving behavior. If substance use drives both OD hospitalizations and crash incidents, we would expect the two outcomes to co-occur geographically — which is exactly what this analysis tests.
 
@@ -66,7 +66,7 @@ Both datasets required significant preprocessing before joining. Key steps inclu
 
 *2026 is a partial year as of the data extract date (April 10, 2026).
 
-**Finding:** Virginia's overdose ED visit rate peaked at 61.0 in 2021 and has declined each year since — a 36% reduction through 2026. The 2021 peak aligns with nationally documented COVID-19 effects: social isolation, reduced access to treatment and recovery services, and increased substance use. Despite the decline, the 2026 rate of 39.0 remains far elevated, confirming the crisis is ongoing.
+**Finding:** Virginia's overdose ED visit rate peaked at 61.0 in 2021 and has declined each year since a 36% reduction through 2026. The 2021 peak aligns with nationally documented COVID-19 effects: social isolation, reduced access to treatment and recovery services, and increased substance use. Despite the decline, the 2026 rate of 39.0 remains far elevated, confirming the crisis is ongoing.
 
 ---
 
@@ -87,7 +87,7 @@ Both datasets required significant preprocessing before joining. Key steps inclu
 | High (500+ crashes/yr) | 49.30 | 95 |
 | Low (< 100 crashes/yr) | 41.79 | 53 |
 
-**Finding:** Both high and medium crash localities show OD rates approximately 22% above low-crash localities (50.96 and 49.3 vs 41.79). The directional gradient — higher crash volume, higher OD rate — is consistent across all three buckets and supports the proposition. Notably, medium-crash counties slightly edge out high-crash ones. This likely reflects urban dynamics: very high-crash localities tend to be dense urban areas (e.g., Northern Virginia, Hampton Roads) where OD reporting and care-seeking patterns differ from rural localities. The relationship is strongest in mid-sized localities where both crash volume and substance-use burden co-occur in the same communities.
+**Finding:** Both high and medium crash localities show OD rates approximately 22% above low-crash localities (50.96 and 49.3 vs 41.79). The directional gradient higher crash volume, higher OD rate — is consistent across all three buckets and supports the proposition. Notably, medium-crash counties slightly edge out high-crash ones. This likely reflects urban dynamics: very high-crash localities tend to be dense urban areas (e.g., Northern Virginia, Hampton Roads) where OD reporting and care-seeking patterns differ from rural localities. The relationship is strongest in mid-sized localities where both crash volume and substance-use burden co-occur in the same communities.
 
 ---
 
@@ -125,13 +125,13 @@ Both datasets required significant preprocessing before joining. Key steps inclu
 | High Drug-Related Crash % | 50.33 | 44 |
 | Low Drug-Related Crash % | 49.13 | 336 |
 
-**Finding:** The gap is small (50.33 vs 49.13, a 2.4% difference). This is likely explained by systematic under-reporting of the drug-related crash flag — officers do not routinely test for substance impairment at the crash scene, so many drug-impaired crashes are recorded without the flag. This makes crash volume (Analysis B) a stronger and more objective signal than the drug flag itself. The small positive gap is still directionally consistent with the proposition.
+**Finding:** The gap is small (50.33 vs 49.13, a 2.4% difference). This is likely explained by systematic under-reporting of the drug-related crash flag officers do not routinely test for substance impairment at the crash scene, so many drug-impaired crashes are recorded without the flag. This makes crash volume (Analysis B) a stronger and more objective signal than the drug flag itself. The small positive gap is still directionally consistent with the proposition.
 
 ---
 
 ## Conclusion
 
-The proposition is supported. Localities with higher crash volumes show OD rates approximately 22% above low-crash localities, and the gradient holds directionally across all three crash buckets. Virginia's overdose crisis peaked in 2021 and is declining, but remains significantly elevated. The geographic concentration in Southwest Virginia's Appalachian corridor — with Amherst, Lynchburg, Buchanan, and Patrick County among the hardest-hit — reflects the intersection of opioid history, rural access gaps, and economic vulnerability that characterizes the region's substance use burden.
+The proposition is supported. Localities with higher crash volumes show OD rates approximately 22% above low-crash localities, and the gradient holds directionally across all three crash buckets. Virginia's overdose crisis peaked in 2021 and is declining, but remains significantly elevated. The geographic concentration in Southwest Virginia's Appalachian corridor with Amherst, Lynchburg, Buchanan, and Patrick County among the hardest-hit reflects the intersection of opioid history, rural access gaps, and economic vulnerability that characterizes the region's substance use burden.
 
 The drug-related crash flag analysis (Analysis D) reveals a data quality limitation: the flag is under-reported, making crash volume a more reliable co-occurrence signal than the flag itself.
 
